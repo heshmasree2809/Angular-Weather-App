@@ -1,0 +1,76 @@
+<div class="flex justify-center my-5">
+  <form (submit)="onSubmit()">
+    <input
+      class="p-2 bg-inherit outline-none border-2 border-gray-300 focus:border-blue-500 rounded-xl text-white"
+      type="text"
+      [(ngModel)]="city"
+      placeholder="Search City"
+      name="city"
+    />
+  </form>
+</div>
+
+<div class="w-96 h-[80vh] shadow-lg rounded-2xl" *ngIf="weatherData">
+  <div class="relative overflow-hidden rounded-t-2xl w-full h-1/2">
+    <img
+      src="../assets/hot.jpg"
+      *ngIf="weatherData.current.temp_c > 15"
+      alt="hot jpg"
+      class="absolute w-full top-0 left-0 h-full"
+    />
+    <img
+      src="../assets/cold.jpg"
+      *ngIf="weatherData.current.temp_c <= 15"
+      alt="cold jpg"
+      class="absolute top-0 left-0 h-full"
+    />
+    <div
+      class="relative z-10 w-full h-full flex flex-col items-center justify-center"
+    >
+      <div class="text-white text-2xl">{{ weatherData.location.name }}</div>
+      <div class="text-white text-6xl font-bold">
+        {{ weatherData.current.temp_c | number : "1.0-0" }}°C
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col m-4 gap-5 text-sm text-white">
+    <p class="text-white">More Information</p>
+    <div
+      class="flex-1 bg-[#2F68BC] py-4 rounded-b-xl flex flex-wrap justify-center items-center gap-10"
+    >
+      <div class="w-full flex justify-between items-center px-4">
+        <div class="flex items-center gap-1">
+          <img
+            [src]="weatherData.current.condition.icon"
+            alt=""
+            class="'w-5 h-5"
+          />
+          <span>Condition</span>
+        </div>
+        <p>{{ weatherData.current.condition.text }}</p>
+      </div>
+      <div class="w-full flex justify-between items-center px-4">
+        <div class="flex items-center gap-1">
+          <img src="../assets/clock.svg" alt="" class="'w-5 h-5" />
+          <span>Date & Time</span>
+        </div>
+        <p>{{ weatherData.location.localtime }}</p>
+      </div>
+      <div class="w-full flex justify-between items-center px-4">
+        <div class="flex items-center gap-1">
+          <img src="../assets/droplet.svg" alt="" class="'w-5 h-5" />
+          <span>Humidity</span>
+        </div>
+        <p>{{ weatherData.current.humidity }}%</p>
+      </div>
+      <div class="w-full flex justify-between items-center px-4">
+        <div class="flex items-center gap-1">
+          <img src="../assets/wind.svg" alt="" class="'w-5 h-5" />
+          <span>Wind</span>
+        </div>
+        <p>{{ weatherData.current.wind_kph }}km/h</p>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
